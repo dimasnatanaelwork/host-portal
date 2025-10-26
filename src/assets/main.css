@@ -1,0 +1,113 @@
+@import './base.css';
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.border-rad-1 {
+  border-radius: 1rem !important;
+}
+
+.m-input-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.m-input {
+  width: 100% !important;
+}
+
+.small-text {
+  font-size: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .small-text {
+    font-size: 0.875rem;
+  }
+}
+
+.smaller-text {
+  font-size: 0.5rem !important;
+}
+
+@media (min-width: 1024px) {
+  .smaller-text {
+    font-size: 0.75rem !important;
+  }
+}
+
+.medium-text {
+  font-size: 0.9rem;
+}
+
+@media (min-width: 1024px) {
+  .medium-text {
+    font-size: 1rem;
+  }
+}
+
+.main-content,
+.sidenav {
+  transition: all 0.2s ease-in-out;
+}
+
+.sidenav {
+  z-index: 999;
+}
+
+.sidenav .navbar-brand,
+.sidenav .navbar-heading {
+  display: block;
+}
+
+@media (min-width: 1200px) {
+  .sidenav.fixed-start + .main-content {
+    margin-left: calc(15rem + 1.5rem);
+  }
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.multiselect__tags {
+  padding: 12px 40px 2px 8px !important;
+}
+
+.multiselect__select {
+  height: 100% !important;
+}
+
+.multiselect__single {
+  margin-bottom: 0 !important;
+}
+
+.multiselect__option--highlight {
+  background-color: #273c8c !important;
+  color: #fff !important;
+}
+
+.multiselect__content-wrapper {
+  margin-top: 0.5rem;
+  border-top: 1px solid #e8e8e8;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.dp__input {
+  border-radius: 0.5rem !important;
+}
+
+.dp__input_icon {
+  color: black !important;
+}
+
+.multiselect__placeholder {
+  color: #717680 !important;
+  /* margin-bottom: 10 !important; */
+}
+
+.primary-color {
+  color: #273c8c;
+}
