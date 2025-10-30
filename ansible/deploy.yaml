@@ -1,0 +1,61 @@
+---
+- name: Deploy Vue.js portfolio to AWS S3
+  hosts: localhost
+  connection: local
+  vars:
+    build_dir: 'dist'
+    s3_bucket: '{{ s3_bucket_name }}'
+    cloudfront_distribution: '{{ cloudfront_distribution_id }}'
+
+  tasks:
+    - name: Check if Node.js is installed
+      command: node --version
+      register: node_check
+      ignore_errors: yes
+
+    - name: Install Node.js if not present
+      block:
+        - name: Update package cache
+          apt:
+            update_cache: yes
+          when: ansible_os_family == 'Debian'
+
+        - name: Install Node.js
+          package:
+            name: nodejs
+            state: present
+          when: ansible_os_family == 'Debian'
+      when: node_check.failed
+
+    - name: Install project dependencies
+      command: npm install
+      args:
+        chdir: '{{ project_root }}'
+
+    - name: Build Vue.js project
+      command: npm run build
+      args:
+        chdir: '{{ project_root }}'
+      environment:
+        NODE_ENV: production
+
+    - name: Install AWS CLI
+      pip:
+        name: awscli
+        state: present
+      when: ansible_os_family == 'Debian'
+
+    - name: Sync built files to S3
+      command: >
+        aws s3 sync {{ build_dir }} s3://{{ s3_bucket }}/
+        --delete
+        --acl public-read
+      args:
+        chdir: '{{ project_root }}'
+
+    - name: Create CloudFront invalidation
+      command: >
+        aws cloudfront create-invalidation
+        --distribution-id {{ cloudfront_distribution }}
+        --paths "/*"
+      when: cloudfront_distribution != ""
